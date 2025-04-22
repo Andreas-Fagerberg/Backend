@@ -11,8 +11,8 @@ public class UserController(IUserService userService) : ControllerBase
     public async Task<IActionResult> CreateUser([FromBody] RegisterRequest request)
     {
         Console.WriteLine(request.Email);
-        await userService.Registeruser(request);
-        return Ok();
+        var response = await userService.Registeruser(request);
+        return Ok(response);
     }
 
     [HttpPost("login")]
@@ -22,8 +22,15 @@ public class UserController(IUserService userService) : ControllerBase
     }
 
     [HttpPost("verify")]
-    public IActionResult VerifyUser() 
+    public IActionResult VerifyUser()
     {
+        return Ok();
+    }
+
+    [HttpDelete("delete")]
+    public async Task<IActionResult> DeleteUser(DeleteUserRequest request)
+    {
+        await userService.DeleteUser(request);
         return Ok();
     }
 }

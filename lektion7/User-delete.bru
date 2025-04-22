@@ -1,0 +1,17 @@
+meta {
+  name: User/delete
+  type: http
+  seq: 3
+}
+
+delete {
+  url: http://localhost:5053/User/delete
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "userId": "43a3f168-f74d-4e2d-a546-ef8a3fed76a7" 
+  }
+}

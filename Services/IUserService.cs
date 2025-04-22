@@ -5,7 +5,7 @@ namespace Backend.Services;
 public interface IUserService
 {
     Task<User?> LoginUser();
-    Task<User?> Registeruser(RegisterRequest request);
+    Task<RegisterResponse?> Registeruser(RegisterRequest request);
     Task<bool> VerifyUser();
-    Task<int> DeleteUser();
+    Task<int> DeleteUser(DeleteUserRequest request);
 }

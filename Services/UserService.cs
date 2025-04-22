@@ -5,9 +5,9 @@ namespace Backend.Services;
 
 public class UserService(IUserRepository userRepository) : IUserService
 {
-    public Task<int> DeleteUser()
+    public async Task<int> DeleteUser(DeleteUserRequest request)
     {
-        throw new NotImplementedException();
+        return await userRepository.DeleteUser(request);
     }
 
     public Task<User?> LoginUser()
@@ -15,7 +15,7 @@ public class UserService(IUserRepository userRepository) : IUserService
         throw new NotImplementedException();
     }
 
-    public async Task<User?> Registeruser(RegisterRequest request)
+    public async Task<RegisterResponse?> Registeruser(RegisterRequest request)
     {
         var user = new User
         {
@@ -23,8 +23,13 @@ public class UserService(IUserRepository userRepository) : IUserService
             Password = request.Password,
             Email = request.Email,
         };
-        Console.WriteLine(user.Password);
-        return await userRepository.SaveUser(user);
+
+        var returnedUser = await userRepository.SaveUser(user);
+
+        if (returnedUser == null)
+            return null;
+
+        return new RegisterResponse { VerificationCode = returnedUser.Id };
     }
 
     public Task<bool> VerifyUser()

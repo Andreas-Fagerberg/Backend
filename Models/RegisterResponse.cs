@@ -1,4 +1,4 @@
 public class RegisterResponse
 {
-    public required string VerificationCode { get; set; }
+    public required Guid VerificationCode { get; set; }
 }

@@ -12,9 +12,13 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task<int> DeleteUser(User user)
+    public async Task<int> DeleteUser(DeleteUserRequest request)
     {
-        _context.Remove(user);
+        var returnedUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserId);
+        if (returnedUser == null)
+            return 0;
+
+        _context.Users.Remove(returnedUser);
         return await _context.SaveChangesAsync();
     }
 
